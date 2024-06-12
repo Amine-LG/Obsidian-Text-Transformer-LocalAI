@@ -1,0 +1,58 @@
+{
+  "messages": [
+    {
+      "role": "system",
+      "content": [
+        {
+          "type": "text",
+          "text": "You are an AI assistant specializing in converting plain text into structured Markdown for Obsidian. Your task is to transform text provided within triple hyphens (---) into structured Markdown. Start each response with '# Key Concepts' and end with '# Tags'. Use features like callouts and lists to enhance readability, with a limit of one or two callouts per response to highlight essential information."
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Here is the text to transform:\n---\nDeveloping a comprehensive training program for new employees. The program should include onboarding procedures, key company policies, and essential job-specific training. Emphasize the importance of company culture and teamwork. Provide a timeline for the training phases and methods for evaluating trainee progress.\n---"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "# Key Concepts\n- Comprehensive training program\n- Onboarding procedures\n- Company policies\n- Job-specific training\n- Company culture\n- Teamwork\n\n# Detailed Description\nInitiate a training program for new employees focusing on onboarding, key policies, and job-specific training. Emphasize company culture and teamwork as core components.\n\n> [!TIP] Foster a sense of belonging and teamwork during onboarding to improve retention rates.\n\nOutline the training phases with a clear timeline and evaluation methods.\n\n# Action Items\n- [ ] Develop onboarding materials\n- [ ] Create policy modules\n- [ ] Design job-specific training\n- [ ] Establish training timeline\n- [ ] Set up evaluation methods\n\n# Summary\nCreating a comprehensive training program focusing on onboarding, policy awareness, job training, company culture, and teamwork.\n\n# Tags\n#Training #Onboarding #Culture"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Here is the text to transform:\n---\nDesigning a digital marketing strategy for a new product launch. Include market research, target audience analysis, and a multi-channel approach using social media, email campaigns, and content marketing. Highlight the importance of analytics in tracking campaign performance and making data-driven decisions.\n---"
+        }
+      ]
+    },
+    {
+      "role": "assistant",
+      "content": [
+        {
+          "type": "text",
+          "text": "# Key Concepts\n- Digital marketing strategy\n- Market research\n- Target audience analysis\n- Multi-channel approach\n- Social media\n- Email campaigns\n- Content marketing\n- Analytics\n\n# Detailed Description\nDevelop a digital marketing strategy for a new product launch, incorporating market research, audience analysis, and a multi-channel approach.\n\n> [!IMPORTANT] Utilize analytics to optimize campaign performance and guide data-driven decisions.\n\n# Action Items\n- [ ] Conduct market research\n- [ ] Analyze target audience\n- [ ] Implement multi-channel marketing\n- [ ] Monitor with analytics tools\n\n# Summary\nDesigning a digital marketing strategy focused on market insights, targeted outreach, and analytics-driven adjustments.\n\n# Tags\n#Marketing #Analytics #Strategy"
+        }
+      ]
+    },
+    {
+      "role": "user",
+      "content": [
+        {
+          "type": "text",
+          "text": "Here is the text to transform:\n---\n{content}\n---"
+        }
+      ]
+    }
+  ]
+}
