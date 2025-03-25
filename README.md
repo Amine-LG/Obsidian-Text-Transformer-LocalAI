@@ -29,13 +29,13 @@ The **Obsidian-Text-Transformer-LocalAI** is a Python tool designed to transform
    - Download Ollama from [Ollama's website](https://ollama.com/).
 
 2. **Verify Ollama with a Model:**
-   - Open your command line interface (CLI) and run the following command to start a model such as Llama3 or Qwen2:
+   - Open your command line interface (CLI) and run the following command to start a model such as Gemma3 or Llama3.1:
      ```bash
-     ollama run llama3
+     ollama run gemma3
      ```
      or
      ```bash
-     ollama run qwen2
+     ollama run llama3.1
      ```
    - This step is to ensure that Ollama and your chosen model are set up correctly on your system. You only need to do this once to verify that everything is working properly.
 
@@ -55,10 +55,17 @@ The **Obsidian-Text-Transformer-LocalAI** is a Python tool designed to transform
 5. **Configuration Setup:**
    - **`config.py` Configuration:**
      - `MODEL_API_URL`: Specify your active Ollama server address (e.g., `http://localhost:11434/api/chat`).
-     - `MODEL`: Select the LLM to use (e.g. 'llama3', 'qwen2').
+     - `MODEL`: Select the LLM to use (e.g. 'gemma3', 'llama3.1').
      - `DIRECTORY_PATH`: Define the directory containing your input files.
      - `OUTPUT_FOLDER`: choose where processed files will be stored.
      - Adjust `MAX_FILE_SIZE` and `MIN_FILE_SIZE` as needed.
+
+     - **New Parameters**:
+     - `NUM_CTX`: Set the extended context size (e.g., 16384 tokens) for handling larger inputs.
+     - `KEEP_ALIVE`: Specify how long the model should remain active (e.g., "10m" for 10 minutes).
+     - `TIMEOUT`: Define the request timeout (e.g., 120 seconds) to allow for processing large files.
+     - `STREAM`: Enable or disable streaming responses (True or False).
+
    - **Create `prompts_config.json`:**
      ```json
      {
@@ -74,24 +81,34 @@ The **Obsidian-Text-Transformer-LocalAI** is a Python tool designed to transform
 
 - **Model Settings:**
   ```python
-  MODEL = 'llama3'  # Specify the model used
+  MODEL = 'gemma3:4b'  # Specify the model used
   TEMPERATURE = 0.0  # Set the model's response variability
   ```
   
-- **API and File Settings:**
+- **API and Extended Context Settings:**
   ```python
   MODEL_API_URL = 'http://localhost:11434/api/chat'
+  NUM_CTX = 16384      # Extended context size (in tokens) for handling larger inputs
+  KEEP_ALIVE = "10m"   # Duration for which the model session is kept alive (e.g., "10m" means 10 minutes)
+  TIMEOUT = 120        # Request timeout in seconds (e.g., 120 seconds)
+  STREAM = True        # Enable streaming responses (True/False)
+  ```
+
+- **File and Logging Settings:**
+  ```python
   MAX_FILE_SIZE = 20000
   MIN_FILE_SIZE = 10
   DIRECTORY_PATH = r'D:\Files\Notes\root'
   OUTPUT_FOLDER = r'D:\Files\Notes\Obsidian_Enhanced'
-  ```
 
-- **Logging Configuration:**
-  ```python
   LOG_DIRECTORY = 'logs'
   PROCESS_LOG_FILE = 'process_log.txt'
   ERROR_LOG_FILE = 'process_errors_log.txt'
+  ```
+
+- **Prompt Configuration:**
+  ```python
+    PROMPTS_CONFIG_FILE = 'prompts_config.json'
   ```
 
 ## Usage
