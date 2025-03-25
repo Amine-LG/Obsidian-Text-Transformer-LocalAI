@@ -1,13 +1,17 @@
 import requests
 import json
 import os
-from config import MODEL, TEMPERATURE, MODEL_API_URL # Import model, temperature, and API URL
+from config import MODEL, TEMPERATURE, MODEL_API_URL, NUM_CTX, KEEP_ALIVE, STREAM, TIMEOUT
 
 class PromptProcessor:
     def __init__(self, output_folder):
-        self.model = MODEL # Use the model from config.py
-        self.temperature = TEMPERATURE # Use the temperature from config.py
-        self.messages = []
+        self.model = MODEL                # Use the model from config.py
+        self.temperature = TEMPERATURE 
+        self.num_ctx = NUM_CTX 
+        self.keep_alive = KEEP_ALIVE
+        self.stream = STREAM
+        self.timeout = TIMEOUT
+        self.messages = []                # To be populated by the prompts JSON file
         self.output_folder = output_folder
 
     def load_prompts_from_json(self, json_file):
@@ -25,12 +29,25 @@ class PromptProcessor:
             "messages": messages,
             "options": {
                 "temperature": self.temperature,
-                "keep_alive": "1h"
+                "keep_alive": self.keep_alive,
+                "num_ctx": self.num_ctx
             },
-            "stream": True
+            "stream": self.stream
         }
 
-        response = requests.post(MODEL_API_URL, json=payload, stream=True)
+        try:
+            response = requests.post(MODEL_API_URL, json=payload, stream=self.stream, timeout=self.timeout)
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as http_err:
+            # Fallback: if the model doesn't support the extended context (num_ctx parameter), retry without it.
+            if "num_ctx" in str(http_err):
+                print("Warning: The model does not support the num_ctx parameter. Retrying without it.")
+                payload["options"].pop("num_ctx")
+                response = requests.post(MODEL_API_URL, json=payload, stream=self.stream, timeout=self.timeout)
+                response.raise_for_status()
+            else:
+                raise http_err
+
         final_response = self._get_response_content(response)
 
         self._save_response(file_name, final_response)
